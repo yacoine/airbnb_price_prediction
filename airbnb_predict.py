@@ -7,8 +7,9 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.pipeline import Pipeline
+
 import time
-import matplotlib as mpl
+import matplotlib.pyplot as plt
 from warnings import simplefilter
 simplefilter(action='ignore', category=FutureWarning)
 
@@ -76,10 +77,10 @@ house_data_dummy= pd.get_dummies(data=house_data, columns=['neighbourhood_group'
 #combines the newly added features into the original data frame
 house_data = pd.concat([house_data, house_data_dummy], axis=1)
 
-print(house_data['room_type_Shared room'])
+#print(house_data['room_type_Shared room'])
 
 y_train=house_data.price
-X_train=house_data[desired_features]
+X_train=house_data[desired_features].abs()
 
 train_X, val_X, train_y, val_y = train_test_split(X_train, y_train, random_state=1)
 
@@ -87,7 +88,7 @@ train_X, val_X, train_y, val_y = train_test_split(X_train, y_train, random_state
 # or looping through possible max_leaf_nodes, depending on which get_mae/get_mea_2 function
 #you decided to use. I believe that get_mea_2 (min split leaf) is more robust in its mae
 min=999_999_999
-for i in range(2,200):
+for i in range(2,3):
 	mae=get_mae_2(i,train_X, val_X, train_y, val_y)
 
 	if mae<min:
@@ -97,9 +98,69 @@ for i in range(2,200):
 	best_mae=min
 	best_min_split=index
 
+
+print(house_data.price.mean())
+
 #Uncomment the below two lines of code if you find a param that is better and comment the for loop
 #best_min_split=70
 #best_mae=get_mae_2(70,train_X, val_X, train_y, val_y)
-
+print(house_data['id'])
 print("Validation MAE for RFR with  {:,.0f} min sample split: {:,.0f}".format(best_min_split,best_mae))
+"""
+plt1.style.use('ggplot')
+plt1.ylabel("Number of houses")
+plt1.xlabel("Neighbourhoods NYC")
+plt1.title("Airbnb Offers per Neighbourhood NYC")
+plt1.hist(house_data['neighbourhood_group'], bins=10)
+"""
+
+plt.figure(1)
+plt.style.use('ggplot')
+plt.ylabel("Number of houses")
+plt.xlabel("Neighbourhoods NYC")
+plt.title("Airbnb Offers per Neighbourhood NYC")
+plt.hist(house_data['neighbourhood_group'], bins=10)
+
+plt.figure(2)
+plt.style.use('ggplot')
+plt.ylabel("Price per night")
+plt.xlabel("Nnumber of reviews")
+plt.title("Airbnb Offers per Neighbourhood NYC")
+plt.scatter(house_data['availability_365'],house_data.price)
+
+#plt.subplot(1,2,1)
+
+#fig.subplots_adjust(hspace=0.4, wspace=0.4)
+#fig.style.use('ggplot')
+
+"""model1= RandomForestRegressor(n_estimators=10,min_samples_split=96, random_state=1)
+model1.fit(train_X,train_y)
+predict_price=model1.predict(X_train)
+
+plt.figure(3)
+plt.style.use('ggplot')
+plt.ylabel("Price per night")
+plt.xlabel("ID")
+plt.title("price comp.")
+plt.scatter(house_data['id'],abs(house_data.price-predict_price))
+
+"""
+
+
+
+
+
+
+
+print(house_data.index)
+
+"""
+plt1.ylabel("Number of houses")
+plt1.xlabel("Neighbourhoods NYC")
+plt1.title("Airbnb Offers per Neighbourhood NYC")
+plt1.hist(house_data['neighbourhood_group'], bins=10)
+"""
+
+plt.show()
+
 
