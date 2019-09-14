@@ -62,6 +62,15 @@ def get_mae_2(min_split, train_X, val_X, train_y, val_y):
 
 house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
 
+price_lower_limit=500
+price_upper_limit=400
+
+
+house_data=house_data.loc[(house_data['price'] >= price_lower_limit) & (house_data['price'] <= price_upper_limit)]
+
+#print("NEW HOUSE PRICE")
+#print(new_house_data.price)
+
 #features desired to be used for the random forest regressor
 desired_features=['minimum_nights', 'number_of_reviews','reviews_per_month', 'calculated_host_listings_count', 'availability_365', 'neighbourhood_group_Bronx', 'neighbourhood_group_Brooklyn',
        'neighbourhood_group_Manhattan', 'neighbourhood_group_Queens',
@@ -87,8 +96,9 @@ train_X, val_X, train_y, val_y = train_test_split(X_train, y_train, random_state
 #This is used to find the best parameter by looping through possible min_split_leaf
 # or looping through possible max_leaf_nodes, depending on which get_mae/get_mea_2 function
 #you decided to use. I believe that get_mea_2 (min split leaf) is more robust in its mae
+
 min=999_999_999
-for i in range(2,3):
+for i in range(2,100):
 	mae=get_mae_2(i,train_X, val_X, train_y, val_y)
 
 	if mae<min:
@@ -102,9 +112,9 @@ for i in range(2,3):
 print(house_data.price.mean())
 
 #Uncomment the below two lines of code if you find a param that is better and comment the for loop
-#best_min_split=70
-#best_mae=get_mae_2(70,train_X, val_X, train_y, val_y)
-print(house_data['id'])
+#best_min_split=75
+#best_mae=get_mae_2(best_min_split,train_X, val_X, train_y, val_y)
+
 print("Validation MAE for RFR with  {:,.0f} min sample split: {:,.0f}".format(best_min_split,best_mae))
 """
 plt1.style.use('ggplot')
@@ -121,12 +131,12 @@ plt.xlabel("Neighbourhoods NYC")
 plt.title("Airbnb Offers per Neighbourhood NYC")
 plt.hist(house_data['neighbourhood_group'], bins=10)
 
-plt.figure(2)
+"""plt.figure(2)
 plt.style.use('ggplot')
 plt.ylabel("Price per night")
 plt.xlabel("Nnumber of reviews")
 plt.title("Airbnb Offers per Neighbourhood NYC")
-plt.scatter(house_data['availability_365'],house_data.price)
+plt.scatter(house_data['number_of_reviews'],bins=100)"""
 
 #plt.subplot(1,2,1)
 
@@ -152,7 +162,7 @@ plt.scatter(house_data['id'],abs(house_data.price-predict_price))
 
 
 
-print(house_data.index)
+
 
 """
 plt1.ylabel("Number of houses")
