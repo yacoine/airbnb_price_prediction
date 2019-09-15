@@ -39,7 +39,7 @@ class MultiColumnLabelEncoder:
     def fit_transform(self,X,y=None):
         return self.fit(X,y).transform(X)
 
-# Give the mean average error value of a random forest regressor by changing the
+# Return the mean average error value of a random forest regressor by changing the
 # max_leaf_nodes param
 def get_mae(max_leaf_nodes, train_X, val_X, train_y, val_y):
 
