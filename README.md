@@ -17,7 +17,7 @@ The data set uses 48,900 entries, and set model fitting will depend on the price
 
 
 
-##GUI HELP NEEDED
+## GUI HELP NEEDED
 
 The basic format of the gui should be 
 
@@ -51,7 +51,7 @@ upper_price_limit & lower_price_limit.***
 
 
 
-##Difficulties
+## Difficulties
 
 The difficulty arise when dealing with the price ranges in NYC because of extreme outsider data from luxury appartments. However, this is dealt with by specifiying price ranges of appartments and training a dummy model based on the price ranges and not the entire data.
 
