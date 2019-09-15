@@ -74,6 +74,8 @@ room_type=input("Room type (1=Entire home/apt, 2=Private room, 3=Share room ")
 """
 
 #This will give a better price prediction based on a price range
+#TO DO: Also give the option of changing the price range as needed, however, it is 
+#preferable that a smaller price range is selected
 price_var=101
 
 if(int(price_var) in range(1,101)):
@@ -105,7 +107,7 @@ else:
 	price_upper_limit=data_house.max()['price']
 
 
-
+#This can be uncommented when the price_var input is working
 price_lower_limit=400
 price_upper_limit=500
 
@@ -126,16 +128,18 @@ desired_features=['minimum_nights', 'number_of_reviews', 'calculated_host_listin
 house_data= pd.get_dummies(data=house_data, columns=['neighbourhood_group','room_type'])#, prefix='neigh_group')
 
 
-
+#Price of all listings
 y_train=house_data.price
+#All attributes of the model with the desired features
 X_train=house_data[desired_features].abs()
 
+#Splitting data into training set and testing set
 train_X, val_X, train_y, val_y = train_test_split(X_train, y_train, random_state=1)
+
 
 #This is used to find the best parameter by looping through possible min_split_leaf
 # or looping through possible max_leaf_nodes, depending on which get_mae/get_mea_2 function
 #you decided to use. I believe that get_mea_2 (min split leaf) is more robust in its mae
-
 """
 min=999_999_999
 for i in range(2,100):
@@ -152,12 +156,13 @@ for i in range(2,100):
 print(house_data.price.mean())
 """
 
-#Uncomment the below two lines of code if you find a param that is better and comment the for loop
+#Uncomment the below two lines of code if you find a param that is better and comment the above for loop
 best_min_split=75
 best_mae=get_mae_2(best_min_split,train_X, val_X, train_y, val_y)
 
 print("Validation MAE for RFR with  {:,.0f} min sample split: +/- ${:,.0f}".format(best_min_split,best_mae))
 
+#This was a test in order to see if the input values would work in df format
 minimum_nights=2
 number_of_reviews=10
 calculated_host_listings_count=1
@@ -171,15 +176,17 @@ rt_private=0
 rt_shared=0
 rt_entire_home=1
 
+#values of the input
 prediction_features={'minimum_nights':[minimum_nights], 'number_of_reviews':[number_of_reviews], 'calculated_host_listings_count':[calculated_host_listings_count], 
 	   'availability_365':[availability_365], 'neighbourhood_group_Bronx':[ng_Bronx], 'neighbourhood_group_Brooklyn':[ng_Brooklyn],
        'neighbourhood_group_Manhattan':[ng_Manhattan], 'neighbourhood_group_Queens':[ng_Queens],
        'neighbourhood_group_Staten Island':[ng_Staten], 'room_type_Entire home/apt':[rt_entire_home],
        'room_type_Private room':[rt_private], 'room_type_Shared room':[rt_shared]}
 
+#creationg of a df for the inputted values
 prediction_df=pd.DataFrame(prediction_features)
 
-
+#fitting and prediction of the model
 model1= RandomForestRegressor(n_estimators=10,min_samples_split=75, random_state=1)
 model1.fit(X_train,y_train)
 predict_price=model1.predict(prediction_df)
@@ -243,6 +250,6 @@ plt1.title("Airbnb Offers per Neighbourhood NYC")
 plt1.hist(house_data['neighbourhood_group'], bins=10)
 """
 
-plt.show()
+#plt.show()
 
 
