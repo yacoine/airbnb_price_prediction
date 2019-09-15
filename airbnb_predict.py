@@ -62,17 +62,28 @@ def get_mae_2(min_split, train_X, val_X, train_y, val_y):
 
 house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
 
-price_lower_limit=500
-price_upper_limit=400
+# TO DO INPUT VALUES for price prediction 
+"""
+minimum_night=input("Minimum nights")
+number_of_reviews=input("Number of reviews")
+reviews_per_month=input("Reviews per month")
+calculated_host_listings_count=input("How many listings do you have, inclusive of this one.")
+availability_365=input("How many days available per year")
+neighbourhood_group=input("Neighbourhood")
+room_type=input("Room type (1=Entire home/apt, 2=Private room, 3=Share room ")
+"""
 
 
+
+price_lower_limit=400
+price_upper_limit=500
+
+#this selects prices of houses in ranges between the upper and lower limits 
 house_data=house_data.loc[(house_data['price'] >= price_lower_limit) & (house_data['price'] <= price_upper_limit)]
 
-#print("NEW HOUSE PRICE")
-#print(new_house_data.price)
 
 #features desired to be used for the random forest regressor
-desired_features=['minimum_nights', 'number_of_reviews','reviews_per_month', 'calculated_host_listings_count', 'availability_365', 'neighbourhood_group_Bronx', 'neighbourhood_group_Brooklyn',
+desired_features=['minimum_nights', 'number_of_reviews', 'calculated_host_listings_count', 'availability_365', 'neighbourhood_group_Bronx', 'neighbourhood_group_Brooklyn',
        'neighbourhood_group_Manhattan', 'neighbourhood_group_Queens',
        'neighbourhood_group_Staten Island', 'room_type_Entire home/apt',
        'room_type_Private room', 'room_type_Shared room']
@@ -97,6 +108,7 @@ train_X, val_X, train_y, val_y = train_test_split(X_train, y_train, random_state
 # or looping through possible max_leaf_nodes, depending on which get_mae/get_mea_2 function
 #you decided to use. I believe that get_mea_2 (min split leaf) is more robust in its mae
 
+"""
 min=999_999_999
 for i in range(2,100):
 	mae=get_mae_2(i,train_X, val_X, train_y, val_y)
@@ -110,10 +122,11 @@ for i in range(2,100):
 
 
 print(house_data.price.mean())
+"""
 
 #Uncomment the below two lines of code if you find a param that is better and comment the for loop
-#best_min_split=75
-#best_mae=get_mae_2(best_min_split,train_X, val_X, train_y, val_y)
+best_min_split=75
+best_mae=get_mae_2(best_min_split,train_X, val_X, train_y, val_y)
 
 print("Validation MAE for RFR with  {:,.0f} min sample split: {:,.0f}".format(best_min_split,best_mae))
 """
