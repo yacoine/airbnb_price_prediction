@@ -5,9 +5,9 @@
 **Python3**
 ## Description
 
-I found a comprehensive airbnb data set for listing in NYC in kaggle, source: (https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data) and I was interested to see if I could apply a random forest regressor for a price prediction.
+I found a comprehensive airbnb data set for listings in NYC in kaggle, source: (https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data) and I was interested to see if I could apply a random forest regressor for a price prediction.
 
-After many manipulations of the features and the random forest regressor (RFR) attributes, I came up with a pretty solid prediction model based on 6 features and price range. The data-set includes qualitative and quantitative data, said qualitative features have been changed into byte-vectors with one-hot encoding method from pandas library ( get_dummies ). Only valid features have been considered and min_samples_split attrributes of the RFR has been altered because it converges to a better answer in a shorter amount of time.
+After many manipulations of the features and the random forest regressor (RFR) attributes, I came up with a pretty solid prediction model based on 6 features and price range. The data-set includes qualitative and quantitative data, said qualitative features have been changed into byte-vectors with one-hot encoding method from pandas library ( get_dummies ). Only valid features have been considered and min_samples_split attrribute of the RFR has been altered because it converges to a better answer in a shorter amount of time.
 
 ## Next Step
 
@@ -45,6 +45,9 @@ Give 3 options for the room type in button format
 o Entire home/apt, Private room, Shared room
 All values will be equal to 0, unless the button is selected than the value is =1
 
+The predictive price result would then be displayed. I have other plots to be displayed but that is in the later works.
+
+
 ***I was also thinking that it would be interesting to not only restrict the price range to sets of
 100, but also allow the user to adjust the price range, for example, instead of estimating that the price range of your listing should be 100 to 200, you can tinker with it and put 70-150. The predictive model has no problem with that change, it should just be included with the vars
 upper_price_limit & lower_price_limit.***
@@ -57,4 +60,3 @@ The difficulty arise when dealing with the price ranges in NYC because of extrem
 
 
 ***Please if you find any errors or whatnot let me know, I am open to all and any comments***
-
