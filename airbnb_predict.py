@@ -69,8 +69,17 @@ number_of_reviews=input("Number of reviews")
 reviews_per_month=input("Reviews per month")
 calculated_host_listings_count=input("How many listings do you have, inclusive of this one.")
 availability_365=input("How many days available per year")
+
 neighbourhood_group=input("Neighbourhood")
+#Give 5 options for the neighbourhood in button format
+o Manhattan, Brooklyn, Bronx, Queens, Staten Island
+All values will be equal to 0, unless the button is selected than the value is =1
+
 room_type=input("Room type (1=Entire home/apt, 2=Private room, 3=Share room ")
+#Give 3 options for the room type in button format
+o Entire home/apt, Private room, Shared room
+All values will be equal to 0, unless the button is selected than the value is =1
+
 """
 
 #This will give a better price prediction based on a price range
@@ -107,9 +116,12 @@ else:
 	price_upper_limit=data_house.max()['price']
 
 
+
+
+
 #This can be uncommented when the price_var input is working
-price_lower_limit=400
-price_upper_limit=500
+price_lower_limit=100
+price_upper_limit=200
 
 #this selects prices of houses in ranges between the upper and lower limits 
 house_data=house_data.loc[(house_data['price'] >= price_lower_limit) & (house_data['price'] <= price_upper_limit)]
@@ -164,13 +176,13 @@ print("Validation MAE for RFR with  {:,.0f} min sample split: +/- ${:,.0f}".form
 
 #This was a test in order to see if the input values would work in df format
 minimum_nights=2
-number_of_reviews=10
+number_of_reviews=100
 calculated_host_listings_count=1
-availability_365=250
-ng_Bronx=0
+availability_365=365
+ng_Bronx=1
 ng_Manhattan=0
 ng_Brooklyn=0
-ng_Queens=1
+ng_Queens=0
 ng_Staten=0
 rt_private=0
 rt_shared=0
