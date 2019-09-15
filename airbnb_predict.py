@@ -7,6 +7,8 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.pipeline import Pipeline
+import seaborn as sns
+
 
 import time
 import matplotlib.pyplot as plt
@@ -61,6 +63,7 @@ def get_mae_2(min_split, train_X, val_X, train_y, val_y):
 	return mae
 
 house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
+graph_house_data=house_data.copy()
 
 # TO DO: INPUT VALUES for price prediction 
 """
@@ -207,61 +210,18 @@ predict_price=model1.predict(prediction_df)
 
 print("predictive price")
 print(predict_price)
-"""
-plt1.style.use('ggplot')
-plt1.ylabel("Number of houses")
-plt1.xlabel("Neighbourhoods NYC")
-plt1.title("Airbnb Offers per Neighbourhood NYC")
-plt1.hist(house_data['neighbourhood_group'], bins=10)
-"""
-"""
-plt.figure(1)
-plt.style.use('ggplot')
-plt.ylabel("Number of houses")
-plt.xlabel("Neighbourhoods NYC")
-plt.title("Airbnb Offers per Neighbourhood NYC")
-plt.hist(house_data['neighbourhood_group'], bins=10)
-"""
-"""plt.figure(2)
-plt.style.use('ggplot')
-plt.ylabel("Price per night")
-plt.xlabel("Nnumber of reviews")
-plt.title("Airbnb Offers per Neighbourhood NYC")
-plt.scatter(house_data['number_of_reviews'],bins=100)"""
 
-#plt.subplot(1,2,1)
+#Uncomment the triple quotations in order to not dispay the graphs
+#"""
+f,ax = plt.subplots(figsize=(16,8))
+ax = sns.scatterplot(y=graph_house_data.latitude,x=graph_house_data.longitude,hue=graph_house_data.neighbourhood_group,palette="coolwarm")
+plt.show()
 
-#fig.subplots_adjust(hspace=0.4, wspace=0.4)
-#fig.style.use('ggplot')
-
-"""model1= RandomForestRegressor(n_estimators=10,min_samples_split=96, random_state=1)
-model1.fit(train_X,train_y)
-predict_price=model1.predict(X_train)
-
-plt.figure(3)
-plt.style.use('ggplot')
-plt.ylabel("Price per night")
-plt.xlabel("ID")
-plt.title("price comp.")
-plt.scatter(house_data['id'],abs(house_data.price-predict_price))
-
-"""
+f,ax = plt.subplots(figsize=(16,8))
+ax = sns.scatterplot(y=graph_house_data.latitude,x=graph_house_data.longitude,hue=graph_house_data.price,palette="coolwarm", hue_norm=(0, 300))
+plt.show()
+#"""
 
 
-
-
-
-
-
-
-
-"""
-plt1.ylabel("Number of houses")
-plt1.xlabel("Neighbourhoods NYC")
-plt1.title("Airbnb Offers per Neighbourhood NYC")
-plt1.hist(house_data['neighbourhood_group'], bins=10)
-"""
-
-#plt.show()
 
 
