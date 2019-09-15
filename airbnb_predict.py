@@ -62,7 +62,7 @@ def get_mae_2(min_split, train_X, val_X, train_y, val_y):
 
 house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
 
-# TO DO INPUT VALUES for price prediction 
+# TO DO: INPUT VALUES for price prediction 
 """
 minimum_night=input("Minimum nights")
 number_of_reviews=input("Number of reviews")
@@ -72,6 +72,37 @@ availability_365=input("How many days available per year")
 neighbourhood_group=input("Neighbourhood")
 room_type=input("Room type (1=Entire home/apt, 2=Private room, 3=Share room ")
 """
+
+#This will give a better price prediction based on a price range
+price_var=101
+
+if(int(price_var) in range(1,101)):
+	price_lower_limit=0
+	price_upper_limit=100
+elif(int(price_var) in range(101,200)):
+	price_lower_limit=101
+	price_upper_limit=200
+elif(int(price_var) in range(201,200)):
+	price_lower_limit=201
+	price_upper_limit=300
+elif(int(price_var) in range(301,200)):
+	price_lower_limit=301
+	price_upper_limit=200
+elif(int(price_var) in range(401,500)):
+	price_lower_limit=401
+	price_upper_limit=500
+elif(int(price_var) in range(501,700)):
+	price_lower_limit=501
+	price_upper_limit=700
+elif(int(price_var) in range(701,1000)):
+	price_lower_limit=701
+	price_upper_limit=1000
+elif(int(price_var) in range(1001,1500)):
+	price_lower_limit=1001
+	price_upper_limit=1500
+else:
+	price_lower_limit=1501
+	price_upper_limit=data_house.max()['price']
 
 
 
