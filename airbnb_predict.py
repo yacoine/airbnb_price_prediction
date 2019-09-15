@@ -91,13 +91,10 @@ desired_features=['minimum_nights', 'number_of_reviews', 'calculated_host_listin
 #Pandas version of hot one encoder, splitting qualitative data into binary data
 #This might not be the most effective way to create a predictive model
 #but i believe it is the best for random forest tree regressor
-house_data['neighbourhood_group']=pd.Categorical(house_data['neighbourhood_group'])
-house_data_dummy= pd.get_dummies(data=house_data, columns=['neighbourhood_group','room_type'])#, prefix='neigh_group')
+#house_data['neighbourhood_group']=pd.Categorical(house_data['neighbourhood_group'])
+house_data= pd.get_dummies(data=house_data, columns=['neighbourhood_group','room_type'])#, prefix='neigh_group')
 
-#combines the newly added features into the original data frame
-house_data = pd.concat([house_data, house_data_dummy], axis=1)
 
-#print(house_data['room_type_Shared room'])
 
 y_train=house_data.price
 X_train=house_data[desired_features].abs()
@@ -128,7 +125,38 @@ print(house_data.price.mean())
 best_min_split=75
 best_mae=get_mae_2(best_min_split,train_X, val_X, train_y, val_y)
 
-print("Validation MAE for RFR with  {:,.0f} min sample split: {:,.0f}".format(best_min_split,best_mae))
+print("Validation MAE for RFR with  {:,.0f} min sample split: +/- ${:,.0f}".format(best_min_split,best_mae))
+
+minimum_nights=2
+number_of_reviews=10
+calculated_host_listings_count=1
+availability_365=250
+ng_Bronx=0
+ng_Manhattan=0
+ng_Brooklyn=0
+ng_Queens=1
+ng_Staten=0
+rt_private=0
+rt_shared=0
+rt_entire_home=1
+
+prediction_features={'minimum_nights':[minimum_nights], 'number_of_reviews':[number_of_reviews], 'calculated_host_listings_count':[calculated_host_listings_count], 
+	   'availability_365':[availability_365], 'neighbourhood_group_Bronx':[ng_Bronx], 'neighbourhood_group_Brooklyn':[ng_Brooklyn],
+       'neighbourhood_group_Manhattan':[ng_Manhattan], 'neighbourhood_group_Queens':[ng_Queens],
+       'neighbourhood_group_Staten Island':[ng_Staten], 'room_type_Entire home/apt':[rt_entire_home],
+       'room_type_Private room':[rt_private], 'room_type_Shared room':[rt_shared]}
+
+prediction_df=pd.DataFrame(prediction_features)
+
+
+model1= RandomForestRegressor(n_estimators=10,min_samples_split=75, random_state=1)
+model1.fit(X_train,y_train)
+predict_price=model1.predict(prediction_df)
+
+
+
+print("predictive price")
+print(predict_price)
 """
 plt1.style.use('ggplot')
 plt1.ylabel("Number of houses")
@@ -136,14 +164,14 @@ plt1.xlabel("Neighbourhoods NYC")
 plt1.title("Airbnb Offers per Neighbourhood NYC")
 plt1.hist(house_data['neighbourhood_group'], bins=10)
 """
-
+"""
 plt.figure(1)
 plt.style.use('ggplot')
 plt.ylabel("Number of houses")
 plt.xlabel("Neighbourhoods NYC")
 plt.title("Airbnb Offers per Neighbourhood NYC")
 plt.hist(house_data['neighbourhood_group'], bins=10)
-
+"""
 """plt.figure(2)
 plt.style.use('ggplot')
 plt.ylabel("Price per night")
