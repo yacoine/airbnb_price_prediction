@@ -64,7 +64,7 @@ Data set used comes from https://www.kaggle.com/dgomonov/new-york-city-airbnb-op
 
 Data set is divided by these column:
 
-![alt text](https://raw.githubusercontent.com/yacoine/airbnb_prediction_price/columns_names.png)
+![Columns in the csv file](https://raw.github.com/yacoine/airbnb_prediction_price/image/columns_names.png)
 
 
 ***Please if you find any errors or whatnot let me know, I am open to all and any comments***
