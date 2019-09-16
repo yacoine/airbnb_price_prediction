@@ -8,12 +8,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.pipeline import Pipeline
 import seaborn as sns
-
-
-import time
+import time #not used by helpful for RF regressor attribute choices during looping
 import matplotlib.pyplot as plt
 from warnings import simplefilter
-simplefilter(action='ignore', category=FutureWarning)
+
+
+simplefilter(action='ignore', category=FutureWarning) #sklearn warning feature for updates is ignored for looping
 
 #Label encoder for multiple lines
 class MultiColumnLabelEncoder:
@@ -63,6 +63,9 @@ def get_mae_2(min_split, train_X, val_X, train_y, val_y):
 	return mae
 
 house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
+
+print(house_data.columns)
+
 graph_house_data=house_data.copy()
 
 # TO DO: INPUT VALUES for price prediction 
@@ -131,7 +134,8 @@ house_data=house_data.loc[(house_data['price'] >= price_lower_limit) & (house_da
 
 
 #features desired to be used for the random forest regressor
-desired_features=['minimum_nights', 'number_of_reviews', 'calculated_host_listings_count', 'availability_365', 'neighbourhood_group_Bronx', 'neighbourhood_group_Brooklyn',
+desired_features=['minimum_nights', 'number_of_reviews', 'calculated_host_listings_count', 'availability_365', 
+	   'neighbourhood_group_Bronx', 'neighbourhood_group_Brooklyn',
        'neighbourhood_group_Manhattan', 'neighbourhood_group_Queens',
        'neighbourhood_group_Staten Island', 'room_type_Entire home/apt',
        'room_type_Private room', 'room_type_Shared room']

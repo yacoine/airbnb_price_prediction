@@ -58,5 +58,13 @@ upper_price_limit & lower_price_limit.***
 
 The difficulty arise when dealing with the price ranges in NYC because of extreme outsider data from luxury appartments. However, this is dealt with by specifiying price ranges of appartments and training a dummy model based on the price ranges and not the entire data.
 
+##Data Set Used
+
+Data set used comes from https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data.
+
+Data set is divided by these column:
+
+![alt text](https://raw.githubusercontent.com/yacoine/airbnb_prediction_price/columns_names.png)
+
 
 ***Please if you find any errors or whatnot let me know, I am open to all and any comments***
