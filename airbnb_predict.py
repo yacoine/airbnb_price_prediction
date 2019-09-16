@@ -144,6 +144,7 @@ desired_features=['minimum_nights', 'number_of_reviews', 'calculated_host_listin
 #This might not be the most effective way to create a predictive model
 #but i believe it is the best for random forest tree regressor
 #house_data['neighbourhood_group']=pd.Categorical(house_data['neighbourhood_group'])
+
 house_data= pd.get_dummies(data=house_data, columns=['neighbourhood_group','room_type'])#, prefix='neigh_group')
 
 
@@ -182,12 +183,12 @@ best_mae=get_mae_2(best_min_split,train_X, val_X, train_y, val_y)
 print("Validation MAE for RFR with  {:,.0f} min sample split: +/- ${:,.0f}".format(best_min_split,best_mae))
 
 #This was a test in order to see if the input values would work in df format
-minimum_nights=2
-number_of_reviews=100
+minimum_nights=1
+number_of_reviews=337
 calculated_host_listings_count=1
 availability_365=365
-ng_Bronx=1
-ng_Manhattan=0
+ng_Bronx=0
+ng_Manhattan=1
 ng_Brooklyn=0
 ng_Queens=0
 ng_Staten=0
@@ -211,9 +212,10 @@ model1.fit(X_train,y_train)
 predict_price=model1.predict(prediction_df)
 
 
+print(prediction_df.to_string())
 
-print("predictive price")
-print(predict_price)
+print(f"predictive price: {predict_price}")
+
 
 #Uncomment the triple quotations in order to not dispay the graphs
 #"""
