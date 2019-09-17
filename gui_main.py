@@ -1,134 +1,42 @@
-# -*- coding: utf-8 -*-
+import PySimpleGUI as sg
+# All the stuff inside your window. 
+layout = [  [sg.Text('Input the values in order to predict airbnb listings in NYC')],
+            [sg.Text('Minimum nights per stay'), sg.InputText()],
+            [sg.Text('Number of reviews'), sg.InputText()],
+            [sg.Text('Number of listings, inclusive:'), sg.InputText()],
+            [sg.Text('Select the appropriate neighbourhood')],
+            [sg.Checkbox('Manhattan', default=True), sg.Checkbox('Brooklyn'), sg.Checkbox('Brooklyn'), sg.Checkbox('Bronx'),sg.Checkbox('Queens'),sg.Checkbox('Staten Island')],
+            [sg.Button('Submit'), sg.Cancel()]]
 
-# Form implementation generated from reading ui file 'design.ui'
-#
-# Created by: PyQt5 UI code generator 5.11.3
-#
-# WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+layout1=[[sg.Button('Submit'), sg.Cancel()]]
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 658)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.SettingsButton = QtWidgets.QPushButton(self.centralwidget)
-        self.SettingsButton.setGeometry(QtCore.QRect(10, 10, 191, 41))
-        self.SettingsButton.setAutoDefault(False)
-        self.SettingsButton.setDefault(False)
-        self.SettingsButton.setFlat(False)
-        self.SettingsButton.setObjectName("SettingsButton")
-        self.TrackerButton = QtWidgets.QPushButton(self.centralwidget)
-        self.TrackerButton.setGeometry(QtCore.QRect(210, 10, 261, 41))
-        self.TrackerButton.setObjectName("TrackerButton")
-        self.ParticipantInfo = QtWidgets.QGroupBox(self.centralwidget)
-        self.ParticipantInfo.setGeometry(QtCore.QRect(10, 60, 301, 271))
-        self.ParticipantInfo.setObjectName("ParticipantInfo")
-        self.label_4 = QtWidgets.QLabel(self.ParticipantInfo)
-        self.label_4.setGeometry(QtCore.QRect(10, 30, 71, 16))
-        self.label_4.setObjectName("label_4")
-        self.label_5 = QtWidgets.QLabel(self.ParticipantInfo)
-        self.label_5.setGeometry(QtCore.QRect(140, 30, 121, 16))
-        self.label_5.setObjectName("label_5")
-        self.label_6 = QtWidgets.QLabel(self.ParticipantInfo)
-        self.label_6.setGeometry(QtCore.QRect(20, 130, 56, 15))
-        self.label_6.setObjectName("label_6")
-        self.label_7 = QtWidgets.QLabel(self.ParticipantInfo)
-        self.label_7.setGeometry(QtCore.QRect(150, 130, 111, 16))
-        self.label_7.setObjectName("label_7")
-        self.TotalRaised = QtWidgets.QTextBrowser(self.ParticipantInfo)
-        self.TotalRaised.setGeometry(QtCore.QRect(10, 60, 71, 41))
-        self.TotalRaised.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.TotalRaised.setObjectName("TotalRaised")
-        self.TotalNumDonations = QtWidgets.QTextBrowser(self.ParticipantInfo)
-        self.TotalNumDonations.setGeometry(QtCore.QRect(150, 60, 71, 41))
-        self.TotalNumDonations.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.TotalNumDonations.setObjectName("TotalNumDonations")
-        self.Goal = QtWidgets.QTextBrowser(self.ParticipantInfo)
-        self.Goal.setGeometry(QtCore.QRect(10, 150, 71, 41))
-        self.Goal.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.Goal.setObjectName("Goal")
-        self.AvgDonation = QtWidgets.QTextBrowser(self.ParticipantInfo)
-        self.AvgDonation.setGeometry(QtCore.QRect(150, 150, 91, 41))
-        self.AvgDonation.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.AvgDonation.setObjectName("AvgDonation")
-        self.DonationInfo = QtWidgets.QGroupBox(self.centralwidget)
-        self.DonationInfo.setGeometry(QtCore.QRect(330, 60, 451, 271))
-        self.DonationInfo.setObjectName("DonationInfo")
-        self.label = QtWidgets.QLabel(self.DonationInfo)
-        self.label.setGeometry(QtCore.QRect(30, 140, 121, 16))
-        self.label.setObjectName("label")
-        self.RecentDonations = QtWidgets.QTextBrowser(self.DonationInfo)
-        self.RecentDonations.setGeometry(QtCore.QRect(10, 160, 431, 101))
-        self.RecentDonations.setAutoFillBackground(False)
-        self.RecentDonations.setDocumentTitle("")
-        self.RecentDonations.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
-        self.RecentDonations.setObjectName("RecentDonations")
-        self.LastDonation = QtWidgets.QTextBrowser(self.DonationInfo)
-        self.LastDonation.setGeometry(QtCore.QRect(10, 40, 431, 31))
-        self.LastDonation.setAutoFillBackground(False)
-        self.LastDonation.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.LastDonation.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.LastDonation.setObjectName("LastDonation")
-        self.label_2 = QtWidgets.QLabel(self.DonationInfo)
-        self.label_2.setGeometry(QtCore.QRect(10, 20, 81, 16))
-        self.label_2.setObjectName("label_2")
-        self.label_3 = QtWidgets.QLabel(self.DonationInfo)
-        self.label_3.setGeometry(QtCore.QRect(10, 80, 81, 16))
-        self.label_3.setObjectName("label_3")
-        self.TopDonation = QtWidgets.QTextBrowser(self.DonationInfo)
-        self.TopDonation.setGeometry(QtCore.QRect(10, 100, 431, 31))
-        self.TopDonation.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.TopDonation.setObjectName("TopDonation")
-        self.ProgressBarButton = QtWidgets.QPushButton(self.centralwidget)
-        self.ProgressBarButton.setGeometry(QtCore.QRect(480, 10, 91, 41))
-        self.ProgressBarButton.setObjectName("ProgressBarButton")
-        self.RefreshButton = QtWidgets.QPushButton(self.centralwidget)
-        self.RefreshButton.setGeometry(QtCore.QRect(580, 10, 101, 41))
-        self.RefreshButton.setObjectName("RefreshButton")
-        self.TestAlertButton = QtWidgets.QPushButton(self.centralwidget)
-        self.TestAlertButton.setGeometry(QtCore.QRect(690, 10, 84, 41))
-        self.TestAlertButton.setObjectName("TestAlertButton")
-        self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(10, 340, 771, 241))
-        self.groupBox.setObjectName("groupBox")
-        self.pushButtonRun = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButtonRun.setGeometry(QtCore.QRect(570, 600, 84, 31))
-        self.pushButtonRun.setObjectName("pushButtonRun")
-        self.pushButtonStop = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButtonStop.setGeometry(QtCore.QRect(670, 600, 84, 31))
-        self.pushButtonStop.setObjectName("pushButtonStop")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+# TO DO: INPUT VALUES for price prediction 
+"""
+minimum_night=input("Minimum nights")
+number_of_reviews=input("Number of reviews")
+calculated_host_listings_count=input("How many listings do you have, inclusive of this one.")
+availability_365=input("How many days available per year")
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+neighbourhood_group=input("Neighbourhood")
+#Give 5 options for the neighbourhood in button format
+o Manhattan, Brooklyn, Bronx, Queens, Staten Island
+All values will be equal to 0, unless the button is selected than the value is =1
 
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Extra Life Donation Tracker"))
-        self.SettingsButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Change folders, Extra Life ID, etc</p></body></html>"))
-        self.SettingsButton.setText(_translate("MainWindow", "Settings"))
-        self.TrackerButton.setText(_translate("MainWindow", "Tracker"))
-        self.ParticipantInfo.setTitle(_translate("MainWindow", "Participant Info"))
-        self.label_4.setText(_translate("MainWindow", "Total Raised"))
-        self.label_5.setText(_translate("MainWindow", "Total # of Donations"))
-        self.label_6.setText(_translate("MainWindow", "Goal"))
-        self.label_7.setText(_translate("MainWindow", "Average Donation"))
-        self.DonationInfo.setTitle(_translate("MainWindow", "Participant Donation Info"))
-        self.label.setText(_translate("MainWindow", "Recent Donations"))
-        self.RecentDonations.setPlaceholderText(_translate("MainWindow", "Recent Donations"))
-        self.LastDonation.setPlaceholderText(_translate("MainWindow", "Last Donation"))
-        self.label_2.setText(_translate("MainWindow", "Last Donation"))
-        self.label_3.setText(_translate("MainWindow", "Top Donation"))
-        self.TopDonation.setPlaceholderText(_translate("MainWindow", "Top Donation"))
-        self.ProgressBarButton.setText(_translate("MainWindow", "Progress Bar"))
-        self.RefreshButton.setText(_translate("MainWindow", "Force Refresh"))
-        self.TestAlertButton.setText(_translate("MainWindow", "Test Alert"))
-        self.groupBox.setTitle(_translate("MainWindow", "Team Info"))
-        self.pushButtonRun.setText(_translate("MainWindow", "Run"))
-        self.pushButtonStop.setText(_translate("MainWindow", "Stop"))
+room_type=input("Room type (1=Entire home/apt, 2=Private room, 3=Share room ")
+#Give 3 options for the room type in button format
+o Entire home/apt, Private room, Shared room
+All values will be equal to 0, unless the button is selected than the value is =1
+"""
+
+
+
+# Create the Window
+window = sg.Window('Get filename example', layout1)
+# Event Loop to process "events" and get the "values" of the inputs
+while True:             
+    event, values = window.Read()
+    if event in (None, 'Cancel'):   # if user closes window or clicks cancel
+        break
+
+window.close()

@@ -11,11 +11,14 @@ import seaborn as sns
 import time #not used by helpful for RF regressor attribute choices during looping
 import matplotlib.pyplot as plt
 from warnings import simplefilter
+import trial_gui 
 
 
 simplefilter(action='ignore', category=FutureWarning) #sklearn warning feature for updates is ignored for looping
 
 #Label encoder for multiple lines
+
+
 class MultiColumnLabelEncoder:
     def __init__(self,columns = None):
         self.columns = columns # array of column names to encode
@@ -64,15 +67,12 @@ def get_mae_2(min_split, train_X, val_X, train_y, val_y):
 
 house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
 
-print(house_data.columns)
-
 graph_house_data=house_data.copy()
 
 # TO DO: INPUT VALUES for price prediction 
 """
 minimum_night=input("Minimum nights")
 number_of_reviews=input("Number of reviews")
-reviews_per_month=input("Reviews per month")
 calculated_host_listings_count=input("How many listings do you have, inclusive of this one.")
 availability_365=input("How many days available per year")
 
@@ -91,7 +91,7 @@ All values will be equal to 0, unless the button is selected than the value is =
 #This will give a better price prediction based on a price range
 #TO DO: Also give the option of changing the price range as needed, however, it is 
 #preferable that a smaller price range is selected
-price_var=101
+price_var=100
 
 if(int(price_var) in range(1,101)):
 	price_lower_limit=0
@@ -211,10 +211,6 @@ model1= RandomForestRegressor(n_estimators=10,min_samples_split=75, random_state
 model1.fit(X_train,y_train)
 predict_price=model1.predict(prediction_df)
 
-
-print(prediction_df.to_string())
-
-print(f"predictive price: {predict_price}")
 
 
 #Uncomment the triple quotations in order to not dispay the graphs
