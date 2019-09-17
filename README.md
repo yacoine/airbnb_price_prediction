@@ -21,38 +21,12 @@ The data set uses 48,900 entries, and set model fitting will depend on the price
 
 ## GUI HELP NEEDED
 
-The basic format of the gui should be:
-
-**HOME PAGE**
-
-Intro to project.
-
-**First Page**
-
-6 input fields.
-
-minimum_night=input("Minimum nights")
-number_of_reviews=input("Number of reviews")
-reviews_per_month=input("Reviews per month")
-calculated_host_listings_count=input("How many listings do you have, inclusive of this one.")
-availability_365=input("How many days available per year")
-
-neighbourhood_group=input("Neighbourhood")
-Give 5 options for the neighbourhood in button format
-o Manhattan, Brooklyn, Bronx, Queens, Staten Island
-All values will be equal to 0, unless the button is selected than the value is =1
-
-room_type=input("Room type (1=Entire home/apt, 2=Private room, 3=Share room ")
-Give 3 options for the room type in button format
-o Entire home/apt, Private room, Shared room
-All values will be equal to 0, unless the button is selected than the value is =1
-
-The predictive price result would then be displayed. I have other plots to be displayed but that is in the later works.
+Initially, I needed help with the GUI but I ended up doing it myself. It is in the works, but so far it looks acceptable.
+Next to do on the GUI:
+Finish up the visual part of this mini-project.
 
 
-***I was also thinking that it would be interesting to not only restrict the price range to sets of
-100, but also allow the user to adjust the price range, for example, instead of estimating that the price range of your listing should be 100 to 200, you can tinker with it and put 70-150. The predictive model has no problem with that change, it should just be included with the vars
-upper_price_limit & lower_price_limit.***
+***Making GUI's is a tough OO constraint ah...***
 
 
 
