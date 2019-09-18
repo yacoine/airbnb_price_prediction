@@ -8,18 +8,164 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.pipeline import Pipeline
 import seaborn as sns
+from numpy import *
 import time #not used by helpful for RF regressor attribute choices during looping
 import matplotlib.pyplot as plt
 from warnings import simplefilter
-import trial_gui 
-
+import sys
+from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5 import uic, QtCore
 
 simplefilter(action='ignore', category=FutureWarning) #sklearn warning feature for updates is ignored for looping
 
+
+#https://github.com/eyllanesc/stackoverflow/tree/master/questions/44603119
+#This is used in case I wanted to ever print a data fram through PyQt5
+#Credit is given to the above git path
+class DataFrameModel(QtCore.QAbstractTableModel):
+    DtypeRole = QtCore.Qt.UserRole + 1000
+    ValueRole = QtCore.Qt.UserRole + 1001
+
+    def __init__(self, df=pd.DataFrame(), parent=None):
+        super(DataFrameModel, self).__init__(parent)
+        self._dataframe = df
+
+    def setDataFrame(self, dataframe):
+        self.beginResetModel()
+        self._dataframe = dataframe.copy()
+        self.endResetModel()
+
+    def dataFrame(self):
+        return self._dataframe
+
+    dataFrame = QtCore.pyqtProperty(pd.DataFrame, fget=dataFrame, fset=setDataFrame)
+
+    @QtCore.pyqtSlot(int, QtCore.Qt.Orientation, result=str)
+    def headerData(self, section: int, orientation: QtCore.Qt.Orientation, role: int = QtCore.Qt.DisplayRole):
+        if role == QtCore.Qt.DisplayRole:
+            if orientation == QtCore.Qt.Horizontal:
+                return self._dataframe.columns[section]
+            else:
+                return str(self._dataframe.index[section])
+        return QtCore.QVariant()
+
+    def rowCount(self, parent=QtCore.QModelIndex()):
+        if parent.isValid():
+            return 0
+        return len(self._dataframe.index)
+
+    def columnCount(self, parent=QtCore.QModelIndex()):
+        if parent.isValid():
+            return 0
+        return self._dataframe.columns.size
+
+    def data(self, index, role=QtCore.Qt.DisplayRole):
+        if not index.isValid() or not (0 <= index.row() < self.rowCount() \
+            and 0 <= index.column() < self.columnCount()):
+            return QtCore.QVariant()
+        row = self._dataframe.index[index.row()]
+        col = self._dataframe.columns[index.column()]
+        dt = self._dataframe[col].dtype
+
+        val = self._dataframe.iloc[row][col]
+        if role == QtCore.Qt.DisplayRole:
+            return str(val)
+        elif role == DataFrameModel.ValueRole:
+            return val
+        if role == DataFrameModel.DtypeRole:
+            return dt
+        return QtCore.QVariant()
+
+    def roleNames(self):
+        roles = {
+            QtCore.Qt.DisplayRole: b'display',
+            DataFrameModel.DtypeRole: b'dtype',
+            DataFrameModel.ValueRole: b'value'
+        }
+        return roles
+
+
 #Label encoder for multiple lines
+ui_name= 'trial.ui'
+Ui_MainWindow, QtBaseClass = uic.loadUiType(ui_name)
+
+class MyApp(QMainWindow):
+	minimum_night=''
+	number_reviews=''
+	current_number_listings=''
+	availability_365=''
+	neigh=''
+	room_type=''
+	lower_limit=''
+	upper_limit=''
+
+	def __init__(self):
+		super(MyApp, self).__init__()
+		self.ui = Ui_MainWindow()
+		self.ui.setupUi(self)
+		self.ui.pushButton.clicked.connect(self.values_stored)
+
+		
+		#print(self.ui.minimum_nights)
+        
+
+	def values_stored(self):
+
+		ng_Brooklyn=ng_Bronx=ng_Manhattan=ng_Staten=ng_Queens =0
+		room_type_Entire=room_type_Private=room_type_Shared=0
+
+		
+		minimum_night=float(self.ui.minimum_nights.text())
+		number_reviews=int(self.ui.number_reviews.text())
+		current_number_listings=int(self.ui.current_number_listings.text())
+		availability_365=int(self.ui.availability_365.text())
+		neigh=int(self.ui.neighbourhood_val.currentIndex())
+		if(neigh==0):
+			ng_Brooklyn=1
+		elif(neigh==1):
+			ng_Bronx=1
+		elif(neigh==2):
+			ng_Manhattan=1
+		elif(neigh==3):
+			ng_Staten=1
+		else:
+			ng_Queens=1
+
+		room_type=int(self.ui.room_type.currentIndex())
+		if(room_type==0):
+			room_type_Entire=1
+		elif(room_type==1):
+			room_type_Private=1
+		else:
+			room_type_Shared=1
+
+		lower_limit=int(self.ui.lower_limit.value())
+		upper_limit=int(self.ui.upper_limit.value())
+
+		prediction_features={'minimum_nights':[minimum_night], 'number_of_reviews':[number_reviews], 'calculated_host_listings_count':[current_number_listings], 
+	   'availability_365':[availability_365], 'neighbourhood_group_Bronx':[ng_Bronx], 'neighbourhood_group_Brooklyn':[ng_Brooklyn],
+       'neighbourhood_group_Manhattan':[ng_Manhattan], 'neighbourhood_group_Queens':[ng_Queens],
+       'neighbourhood_group_Staten Island':[ng_Staten], 'room_type_Entire home/apt':[room_type_Entire],
+       'room_type_Private room':[room_type_Private], 'room_type_Shared room':[room_type_Shared]}
+
+		self.ui.price_return.setText(predict_price(prediction_features))
+
+		#predict_price(prediction_features)
+
+		return prediction_features
+
+	def update(self, app):
+
+		app.price_lower_limit=int(self.ui.lower_limit.value())
+		app.price_upper_limit=int(self.ui.upper_limit.value())
+
+
+
 
 
 class MultiColumnLabelEncoder:
+
+
     def __init__(self,columns = None):
         self.columns = columns # array of column names to encode
 
@@ -69,57 +215,23 @@ house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
 
 graph_house_data=house_data.copy()
 
-# TO DO: INPUT VALUES for price prediction 
-"""
-minimum_night=input("Minimum nights")
-number_of_reviews=input("Number of reviews")
-calculated_host_listings_count=input("How many listings do you have, inclusive of this one.")
-availability_365=input("How many days available per year")
+def predict_price(features):
 
-neighbourhood_group=input("Neighbourhood")
-#Give 5 options for the neighbourhood in button format
-o Manhattan, Brooklyn, Bronx, Queens, Staten Island
-All values will be equal to 0, unless the button is selected than the value is =1
 
-room_type=input("Room type (1=Entire home/apt, 2=Private room, 3=Share room ")
-#Give 3 options for the room type in button format
-o Entire home/apt, Private room, Shared room
-All values will be equal to 0, unless the button is selected than the value is =1
+		prediction_df=pd.DataFrame(features)
 
-"""
+#fitting and prediction of the model
+		model1= RandomForestRegressor(n_estimators=10,min_samples_split=75, random_state=1)
+		model1.fit(X_train,y_train)
+		predict_price=model1.predict(prediction_df)
 
-#This will give a better price prediction based on a price range
-#TO DO: Also give the option of changing the price range as needed, however, it is 
-#preferable that a smaller price range is selected
-price_var=100
+		print(predict_price)
+		#MyApp.price_return.setText("predict_price")
 
-if(int(price_var) in range(1,101)):
-	price_lower_limit=0
-	price_upper_limit=100
-elif(int(price_var) in range(101,200)):
-	price_lower_limit=101
-	price_upper_limit=200
-elif(int(price_var) in range(201,200)):
-	price_lower_limit=201
-	price_upper_limit=300
-elif(int(price_var) in range(301,200)):
-	price_lower_limit=301
-	price_upper_limit=200
-elif(int(price_var) in range(401,500)):
-	price_lower_limit=401
-	price_upper_limit=500
-elif(int(price_var) in range(501,700)):
-	price_lower_limit=501
-	price_upper_limit=700
-elif(int(price_var) in range(701,1000)):
-	price_lower_limit=701
-	price_upper_limit=1000
-elif(int(price_var) in range(1001,1500)):
-	price_lower_limit=1001
-	price_upper_limit=1500
-else:
-	price_lower_limit=1501
-	price_upper_limit=data_house.max()['price']
+		#MyApp.price_return.setText(" WORKS ?")
+		return str(predict_price[0])
+
+
 
 
 
@@ -128,6 +240,11 @@ else:
 #This can be uncommented when the price_var input is working
 price_lower_limit=100
 price_upper_limit=200
+
+
+
+print("initial:")
+print(price_lower_limit)
 
 #this selects prices of houses in ranges between the upper and lower limits 
 house_data=house_data.loc[(house_data['price'] >= price_lower_limit) & (house_data['price'] <= price_upper_limit)]
@@ -150,8 +267,13 @@ house_data= pd.get_dummies(data=house_data, columns=['neighbourhood_group','room
 
 #Price of all listings
 y_train=house_data.price
+
+
+print(DataFrameModel(y_train))
+
 #All attributes of the model with the desired features
 X_train=house_data[desired_features].abs()
+
 
 #Splitting data into training set and testing set
 train_X, val_X, train_y, val_y = train_test_split(X_train, y_train, random_state=1)
@@ -180,28 +302,11 @@ print(house_data.price.mean())
 best_min_split=75
 best_mae=get_mae_2(best_min_split,train_X, val_X, train_y, val_y)
 
+
+
+
 print("Validation MAE for RFR with  {:,.0f} min sample split: +/- ${:,.0f}".format(best_min_split,best_mae))
-
-#This was a test in order to see if the input values would work in df format
-minimum_nights=1
-number_of_reviews=337
-calculated_host_listings_count=1
-availability_365=365
-ng_Bronx=0
-ng_Manhattan=1
-ng_Brooklyn=0
-ng_Queens=0
-ng_Staten=0
-rt_private=0
-rt_shared=0
-rt_entire_home=1
-
-#values of the input
-prediction_features={'minimum_nights':[minimum_nights], 'number_of_reviews':[number_of_reviews], 'calculated_host_listings_count':[calculated_host_listings_count], 
-	   'availability_365':[availability_365], 'neighbourhood_group_Bronx':[ng_Bronx], 'neighbourhood_group_Brooklyn':[ng_Brooklyn],
-       'neighbourhood_group_Manhattan':[ng_Manhattan], 'neighbourhood_group_Queens':[ng_Queens],
-       'neighbourhood_group_Staten Island':[ng_Staten], 'room_type_Entire home/apt':[rt_entire_home],
-       'room_type_Private room':[rt_private], 'room_type_Shared room':[rt_shared]}
+"""
 
 #creationg of a df for the inputted values
 prediction_df=pd.DataFrame(prediction_features)
@@ -211,19 +316,23 @@ model1= RandomForestRegressor(n_estimators=10,min_samples_split=75, random_state
 model1.fit(X_train,y_train)
 predict_price=model1.predict(prediction_df)
 
-
+"""
 
 #Uncomment the triple quotations in order to not dispay the graphs
 #"""
 f,ax = plt.subplots(figsize=(16,8))
 ax = sns.scatterplot(y=graph_house_data.latitude,x=graph_house_data.longitude,hue=graph_house_data.neighbourhood_group,palette="coolwarm")
-plt.show()
+#plt.show()
 
 f,ax = plt.subplots(figsize=(16,8))
 ax = sns.scatterplot(y=graph_house_data.latitude,x=graph_house_data.longitude,hue=graph_house_data.price,palette="coolwarm", hue_norm=(0, 300))
-plt.show()
+#plt.show()
 #"""
+app = QApplication(sys.argv)
+window = MyApp()
+window.show()
 
-
-
+print('upper limit:')
+print(price_lower_limit)
+sys.exit(app.exec_())
 

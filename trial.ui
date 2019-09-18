@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>469</height>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,28 +40,6 @@
      <string>Share Room</string>
     </property>
    </item>
-  </widget>
-  <widget class="QLineEdit" name="minimum_nights">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>10</y>
-     <width>161</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="inputMask">
-    <string/>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="readOnly">
-    <bool>false</bool>
-   </property>
-   <property name="placeholderText">
-    <string>1</string>
-   </property>
   </widget>
   <widget class="QComboBox" name="neighbourhood_val">
    <property name="geometry">
@@ -97,45 +75,6 @@
      <string>Queens</string>
     </property>
    </item>
-  </widget>
-  <widget class="QLineEdit" name="number_reviews">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>60</y>
-     <width>161</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="current_number_listings">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>110</y>
-     <width>161</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="availability_365">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>160</y>
-     <width>161</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
   </widget>
   <widget class="QTextBrowser" name="textBrowser_7">
    <property name="geometry">
@@ -189,58 +128,20 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Upper limit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QDoubleSpinBox" name="lower_limit">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>330</y>
-     <width>101</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="decimals">
-    <number>0</number>
-   </property>
-   <property name="maximum">
-    <double>19000.000000000000000</double>
-   </property>
-   <property name="singleStep">
-    <double>20.000000000000000</double>
-   </property>
-   <property name="value">
-    <double>0.000000000000000</double>
-   </property>
-  </widget>
-  <widget class="QDoubleSpinBox" name="upper_limit">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>360</y>
-     <width>101</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="decimals">
-    <number>0</number>
-   </property>
-   <property name="maximum">
-    <double>20000.000000000000000</double>
-   </property>
-   <property name="singleStep">
-    <double>20.000000000000000</double>
-   </property>
-   <property name="value">
-    <double>100.000000000000000</double>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>200</x>
      <y>420</y>
      <width>113</width>
      <height>32</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>Predict</string>
@@ -269,7 +170,7 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="text">
-    <string>Number of total listings, inclusive:</string>
+    <string>Number of total reviews:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -377,6 +278,170 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Upper limit cannot be higher than lower limit</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="minimum_nights">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>20</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>365</number>
+   </property>
+   <property name="singleStep">
+    <number>1</number>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+   <property name="displayIntegerBase">
+    <number>10</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="upper_limit">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>360</y>
+     <width>101</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>100</number>
+   </property>
+   <property name="maximum">
+    <number>20000</number>
+   </property>
+   <property name="singleStep">
+    <number>20</number>
+   </property>
+   <property name="value">
+    <number>100</number>
+   </property>
+   <property name="displayIntegerBase">
+    <number>10</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="number_reviews">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>60</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>50000</number>
+   </property>
+   <property name="singleStep">
+    <number>1</number>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+   <property name="displayIntegerBase">
+    <number>10</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="current_number_listings">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>110</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>300</number>
+   </property>
+   <property name="singleStep">
+    <number>1</number>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+   <property name="displayIntegerBase">
+    <number>10</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="availability_365">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>160</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>365</number>
+   </property>
+   <property name="singleStep">
+    <number>1</number>
+   </property>
+   <property name="value">
+    <number>1</number>
+   </property>
+   <property name="displayIntegerBase">
+    <number>10</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="lower_limit">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>330</y>
+     <width>101</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>0</number>
+   </property>
+   <property name="maximum">
+    <number>10000</number>
+   </property>
+   <property name="singleStep">
+    <number>20</number>
+   </property>
+   <property name="value">
+    <number>100</number>
+   </property>
+   <property name="displayIntegerBase">
+    <number>10</number>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="price_return">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>420</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="reset">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>420</y>
+     <width>113</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset</string>
    </property>
   </widget>
  </widget>

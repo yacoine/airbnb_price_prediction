@@ -1,17 +1,3 @@
-"""from PyQt5 import QtWidgets, uic
- 
-import sys
- 
-app = QtWidgets.QApplication([])
- 
-win = uic.loadUi("trial.ui") #specify the location of your .ui file
- 
-win.show()
-
-print(QtWidgets.minimum_nights)
- 
-sys.exit(app.exec())"""
-
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
@@ -42,9 +28,7 @@ class MyApp(QMainWindow):
         
 
 	def values_stored(self):
-
-		#self.minimum_nights=
-		global minimum_night, number_reviews, current_number_listings,availability_365,neigh,room_type,lower_limit,upper_limit
+		
 		minimum_night=int(self.ui.minimum_nights.text())
 		number_reviews=int(self.ui.number_reviews.text())
 		current_number_listings=int(self.ui.current_number_listings.text())
@@ -73,6 +57,7 @@ if __name__ == '__main__':
 	window.show()
 
 	#airbnb_predict.trial_func()
+
 
 
 	sys.exit(app.exec_())
