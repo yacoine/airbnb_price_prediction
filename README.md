@@ -99,7 +99,20 @@ With a price range of $100:$200 the prediction of the $150 listing was **$150.75
 
 We can clearly see that as the price range becomes more specific the price prediction becomes more accurate. In this case our prediction was $0.75 off, but the mean average error was +/- $25. As the upper and lower limit of price is made more specific the training model is mostly trained with listing in that price range and is able to determine more accurately. 
 
+## setup
 
+Using the virtual environment package `venv`:
+```bash
+    $ python3 -m venv venv
+    $ source venv/bin/activate
+    $ pip install -r requirements.txt
+```
+
+## run
+
+```bash
+    $ python3 airbnb_predict.py
+```
 
 ***Please if you find any errors or whatnot let me know, I am open to all and any comments***
 
