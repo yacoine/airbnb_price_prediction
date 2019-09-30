@@ -3,7 +3,7 @@
 
 ## Personal mini-project
 **Python3**
-**Taught myself the RFR model, most of the features, and the GUI in around 3ish days**
+
 ## Description
 
 I found a comprehensive airbnb data set for listings in NYC which lead my curious side see if I could apply a random forest regressor for a price prediction.
