@@ -117,6 +117,6 @@ Using the virtual environment package `venv`:
     $ python3 airbnb_predict.py
 ```
 
-***Please if you find any errors or whatnot let me know, I am open to all and any comments***
+***If you find any errors or whatnot let me know, I am open to all and any comments***
 
 email: y.acoine@gmail.com
