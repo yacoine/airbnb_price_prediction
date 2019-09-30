@@ -6,7 +6,7 @@
 
 ## Description
 
-I found a comprehensive airbnb data set for listings in NYC which lead my curious side see if I could apply a random forest regressor for a price prediction.
+I found a comprehensive airbnb data set for listings in NYC which sparked my curiousity and inspired me to apply a random forest regressor for a price prediction.
 
 After manipulating the features and the random forest regressor (RFR) attributes multiple times, I came up with a pretty solid prediction model based on 6 features and price range. The data-set includes qualitative and quantitative data, said qualitative features have been changed into byte-vectors with one-hot encoding method from pandas library ( get_dummies ). Only valid features have been considered for this predictive model, as well as, a change in the RGR's attribute- min_samples_split. The reason for picking this attribute over others is further explained in this repo.
 
