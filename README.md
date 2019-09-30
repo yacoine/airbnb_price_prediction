@@ -14,15 +14,16 @@ This price predictive model can be useful for individuals that own airbnb listin
 
 ## Next Step
 
-Finishing up a GUI for the interactivity of this mini-project.
+Finding a correlating data set that includes space measurements of the listings with more quantitative description regarding
+the listings. However, this shows the strength of using RFRs on data sets that do not seem very promising.
 
-The data set uses 48,900 entries, and set model fitting will depend on the price range.
+The data set uses 48,900 entries and  model fitting depends on price range.
 
 
 
 ## GUI HELP NEEDED
 
-Initially, I needed help with the GUI but I ended up doing it myself. In the works.
+GUI works! No help needed.
 
 
 
@@ -99,7 +100,9 @@ With a price range of $100:$200 the prediction of the $150 listing was **$150.75
 
 We can clearly see that as the price range becomes more specific the price prediction becomes more accurate. In this case our prediction was $0.75 off, but the mean average error was +/- $25. As the upper and lower limit of price is made more specific the training model is mostly trained with listing in that price range and is able to determine more accurately. 
 
-## setup
+## Setup
+Special thanks to https://github.com/ademilly for his help on the set-up tools.
+
 
 Using the virtual environment package `venv`:
 ```bash

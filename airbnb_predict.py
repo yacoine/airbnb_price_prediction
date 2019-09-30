@@ -250,14 +250,11 @@ def predict_price(features,lower,upper):
 
 house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
 graph_house_data=house_data.copy()
-#This can be uncommented when the price_var input is working
+
+#This can be uncommented or  changed if you wanted to work with the model itself
 price_lower_limit=100
 price_upper_limit=200
 
-
-
-print("initial:")
-print(price_lower_limit)
 
 #this selects prices of houses in ranges between the upper and lower limits 
 house_data=house_data.loc[(house_data['price'] >= price_lower_limit) & (house_data['price'] <= price_upper_limit)]
