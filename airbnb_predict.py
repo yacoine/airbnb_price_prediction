@@ -148,7 +148,7 @@ class MyApp(QMainWindow):
        'neighbourhood_group_Staten Island':[ng_Staten], 'room_type_Entire home/apt':[room_type_Entire],
        'room_type_Private room':[room_type_Private], 'room_type_Shared room':[room_type_Shared]}
 
-		self.ui.price_return.setText(predict_price(prediction_features))
+		self.ui.price_return.setText(predict_price(prediction_features,lower_limit,upper_limit))
 
 		#predict_price(prediction_features)
 
@@ -211,21 +211,33 @@ def get_mae_2(min_split, train_X, val_X, train_y, val_y):
 
 	return mae
 
-house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
 
-graph_house_data=house_data.copy()
+def predict_price(features,lower,upper):
 
-def predict_price(features):
+		price_lower_limit=lower
+		price_upper_limit=upper
 
 
 		prediction_df=pd.DataFrame(features)
+		house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
+		house_data=house_data.loc[(house_data['price'] >= price_lower_limit) & (house_data['price'] <= price_upper_limit)]
+		print(house_data.price)
+
+		desired_features=['minimum_nights', 'number_of_reviews', 'calculated_host_listings_count', 'availability_365', 
+	   'neighbourhood_group_Bronx', 'neighbourhood_group_Brooklyn',
+       'neighbourhood_group_Manhattan', 'neighbourhood_group_Queens',
+       'neighbourhood_group_Staten Island', 'room_type_Entire home/apt',
+       'room_type_Private room', 'room_type_Shared room']
+
+		
+		house_data= pd.get_dummies(data=house_data, columns=['neighbourhood_group','room_type'])
+		X_train=house_data[desired_features].abs()
+		y_train=house_data.price
 
 #fitting and prediction of the model
 		model1= RandomForestRegressor(n_estimators=10,min_samples_split=75, random_state=1)
 		model1.fit(X_train,y_train)
 		predict_price=model1.predict(prediction_df)
-
-		print(predict_price)
 		#MyApp.price_return.setText("predict_price")
 
 		#MyApp.price_return.setText(" WORKS ?")
@@ -236,7 +248,8 @@ def predict_price(features):
 
 
 
-
+house_data=pd.read_csv('AB_NYC_2019.csv').fillna(0)
+graph_house_data=house_data.copy()
 #This can be uncommented when the price_var input is working
 price_lower_limit=100
 price_upper_limit=200
@@ -261,6 +274,8 @@ desired_features=['minimum_nights', 'number_of_reviews', 'calculated_host_listin
 #This might not be the most effective way to create a predictive model
 #but i believe it is the best for random forest tree regressor
 #house_data['neighbourhood_group']=pd.Categorical(house_data['neighbourhood_group'])
+
+
 
 house_data= pd.get_dummies(data=house_data, columns=['neighbourhood_group','room_type'])#, prefix='neigh_group')
 
@@ -322,11 +337,11 @@ predict_price=model1.predict(prediction_df)
 #"""
 f,ax = plt.subplots(figsize=(16,8))
 ax = sns.scatterplot(y=graph_house_data.latitude,x=graph_house_data.longitude,hue=graph_house_data.neighbourhood_group,palette="coolwarm")
-#plt.show()
+plt.show()
 
 f,ax = plt.subplots(figsize=(16,8))
 ax = sns.scatterplot(y=graph_house_data.latitude,x=graph_house_data.longitude,hue=graph_house_data.price,palette="coolwarm", hue_norm=(0, 300))
-#plt.show()
+plt.show()
 #"""
 app = QApplication(sys.argv)
 window = MyApp()
