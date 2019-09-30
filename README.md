@@ -21,9 +21,14 @@ The data set uses 48,900 entries and  model fitting depends on price range.
 
 
 
-## GUI HELP NEEDED
+## GUI 
 
-GUI works! No help needed.
+The gui takes in 6 entries and price ranges with a lower and upper limit. This was my biggest hurdle, because I had to learn how to implement it with my python code.
+I used PyQt Designer for most of the GUI.
+
+
+![GUI](images/gui.png)
+
 
 
 
